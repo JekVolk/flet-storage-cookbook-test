@@ -1,12 +1,11 @@
 name: Desktop and Mobile Builds (Linux, macOS, Windows, AAB, APK, IPA)
 
-# SOURCE: https://github.com/ndonkoHenri/flet-github-action-workflows
-
 on:
   # Runs on push to any of the below branches
   push:
     branches:
       - main
+
   # Runs on pull request events that target one of the below branches
   pull_request:
     branches:
@@ -22,9 +21,6 @@ env:
 
   # Python version to use
   PYTHON_VERSION: 3.12.8
-
-  # Flutter version to use
-  FLUTTER_VERSION: 4.10.0
   
   # flet-cli version to install for `flet build`
   FLET_CLI_VERSION: 0.27.5
@@ -56,14 +52,8 @@ jobs:
         python -m pip install --upgrade pip
         pip install flet-cli==$env:FLET_CLI_VERSION
 
-    - name: Setup Flutter ${{ env.FLUTTER_VERSION }}
-      uses: subosito/flutter-action@v2
-      with:
-        flutter-version: ${{ env.FLUTTER_VERSION }}
-
     - name: Flet Build Windows
       run: |
-        flutter config --no-analytics
         flet build windows --verbose --no-rich-output --build-number=$env:BUILD_NUMBER --build-version=$env:BUILD_VERSION
 
     - name: Upload Windows Artifact
@@ -92,14 +82,8 @@ jobs:
         python -m pip install --upgrade pip
         pip install flet-cli==$FLET_CLI_VERSION
 
-    - name: Setup Flutter ${{ env.FLUTTER_VERSION }}
-      uses: subosito/flutter-action@v2
-      with:
-        flutter-version: ${{ env.FLUTTER_VERSION }}
-
     - name: Flet Build APK
       run: |
-        flutter config --no-analytics
         flet build apk --verbose --build-number=$BUILD_NUMBER --build-version=$BUILD_VERSION
 
     - name: Upload APK Artifact
@@ -109,4 +93,3 @@ jobs:
         path: build/apk
         if-no-files-found: warn
         overwrite: false
-

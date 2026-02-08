@@ -24,7 +24,7 @@ env:
   PYTHON_VERSION: 3.12.8
 
   # Flutter version to use
-  FLUTTER_VERSION: 3.27.4
+  FLUTTER_VERSION: 4.10.0
   
   # flet-cli version to install for `flet build`
   FLET_CLI_VERSION: 0.27.5
